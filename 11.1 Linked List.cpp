@@ -6,14 +6,26 @@
 #include <iostream>
 using namespace std;
 
-class A
+struct A
+{
+    int data;
+    A* next;//Puntero al siguiente nodo
+};
+class Lista
 {
 private:
-    int data;
-    A* next; //Puntero al siguiente nodo
+    int size;
 
 public:
-    void insert(const int& value, A*& position) //Añadir espacio al final
+    A* inicio; //Creamos puntero apuntando al inicio
+
+    Lista()//Constructor default
+    {
+        inicio = nullptr;
+        size = 0;
+    }
+
+    void insert(const int& value) //Añadir espacio al final
     {
         //Creamos un nuevo nodo
         A* newNode = new A();
@@ -21,36 +33,35 @@ public:
         newNode->next = nullptr; //El siguiente valor esta vacio
 
         //Si al final esta vacio añadios nuevo nodo
-        if (position == nullptr)
+        if (inicio == nullptr)
         {
-            position = newNode;
+            inicio = newNode;
         }
         else {
-            A* temp = position; //Creamos nodo tamps
-            while (temp->next != nullptr)
-            {
-                temp = temp->next; //Recorremos la lista hasta el ultimo nodo
-            }
-            temp->next = newNode; //Enlazamos el neuvo nodo al final de nuestra lista
+            newNode->next = inicio;
+            inicio = newNode;
         }
+        size++;
     }
-    void a(unsigned int position, const int& value)
-    {
-        
-    }
+
     void print()
     {
-
+        A* aux = inicio;
+        while (aux != nullptr)
+        {
+            cout << aux->data << " ";//El aux apunta al valor que guarda
+            aux = aux->next; //Ahora apuntara al siguiente hasta que sea nullptr
+        }
     }
 };
 int main()
 {
-    A* head = nullptr; //Al iniciar la lista esta vacia
     //Insertar 5 elementos en diferentes posiciones e imprimir cada vez
-    A a;
-    a.insert(2, head);
-    a.insert(5, head);
-    a.insert(7, head);
-    a.insert(3, head);
-    a.insert(2, head);
+    Lista a;
+    a.insert(2);
+    a.insert(5);
+    a.insert(7);
+    a.insert(3);
+    a.insert(2);
+    a.print();
 }
